@@ -1,0 +1,4 @@
+*.pyc
+__pycache__
+database/dev.db
+dobraheura/settings.py

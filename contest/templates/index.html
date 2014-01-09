@@ -1,0 +1,8 @@
+<ul>
+{% for contest in contests %}
+	<li>#{{ contest.id }}, {{ contest.type }}<a href="{% url 'contest' contest.id %}">Open</a></li>
+
+{% empty %}
+	<li>Sorry, there are no contests I can show you</li>
+{% endfor%}
+</ul>

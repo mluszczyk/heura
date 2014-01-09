@@ -1,0 +1,6 @@
+<ul>
+{% for input in inputs %}
+	<li><a href="{% url 'input' input userhash %}">Link<a></li>
+{% empty %}
+	<li>No inputs available</li>
+{% endfor %}
