@@ -1,9 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contest #{{contest.id}}
+{% endblock %}
+
+{% block header %}
+<h1>#{{ contest.id }}. {% block task_name %}Longest cycle{% endblock %}</h1>
+	<p class="dates">Announced: {{ contest.announce_date }}.
+		Starts at: {{ contest.start_date }}. Ends at: {{ contest.end_date }}.
+	Fee: {{ contest.entrance_fee }}. Number of contestants: {{ num_contestants }}.
+	{% if over %} Prize {% else %} Expected prize (at least): {% endif %} {{ prize }} </p>
+{% endblock %}
+
+{% block content %}
+
 <div class="contest">
 
-	<h1>#{{ contest.id }}. {% block task_name %}Longest cycle{% endblock %}</h1>
-	<p class="dates">Announced: {{ contest.announce_date }}, 
-		starts at: {{ contest.start_date }}, ends at: {{ contest.end_date }}</p>
-	<p class="short_info">Fee: {{ contest.entrance_fee }}, current contestants: {{ cur_contestants }}</p>
 
 {% if not is_contestant and not over %}
 	<p class="enter"><a href="{% url 'get_key' contest.id %}">Compete!</a></p>
@@ -19,13 +31,14 @@
 
 {% endif %}
 
+	<h2>Task</h2>
 	<div class="long_descr">
 {% block task_long_descr %}
 		<p>It's not easy to find the longest cycle in a general graph. You're given a simple  graph (i.e. undirected, without multiedges and loops). Your task is to find a simple cycle in it (a path that begins and ends in the same vertex, but goes through any edge and vertex at most once). Remember, the longer cycle you find, the more points you get.</p>
 
 		<p>Vertices are numbered from 1. You can assume, that there exist at least a cycle of length 2 in each input graph.</p>
 
-		<p><b>Input:</b> Numbers <i>n</i> and </i>m</i> - the number of vertices and edges. In the next <i>m</i> lines follow integers <i>a</i> and <i>b</i>, which mean, that an edge connects vertex <i>a</i> and <i>b</i>.</p>
+		<p><b>Input:</b> Numbers <i>n</i> and <i>m</i> - the number of vertices and edges. In the next <i>m</i> lines follow integers <i>a</i> and <i>b</i>, which mean, that an edge connects vertex <i>a</i> and <i>b</i>.</p>
 		<p><b>Output:</b> The correct output consists of two lines. The first contains the length of the cycle you've found, and the next should be the list of numbers of subsequent vertices.</p>
 	</div>
 {% endblock %}
@@ -45,7 +58,7 @@
 {% if over %}
 	<h2>Results</h2>
 
-	<table>
+	<table class="table">
 	<tr>
 		<th>Contestant</th>
 		<th>Full score</th>
@@ -91,7 +104,7 @@
 
 	<h2>Submissions</h2>
 
-	<table class="submissions">
+	<table class="submissions table">
 		<tr>
 			<th>Date</th>
 			<th>Input no.</th>
@@ -110,17 +123,10 @@
 	{% empty %}
 		<tr><td colspan="4">Be the first to submit your output!</td></tr>
 	{% endfor %}
-	</ul>
-
-{% endif %}
-
-{% if over %}
-	<h2>Results</h2>
-
-	<table>
 	</table>
+
 {% endif %}
 
 </div>
 
-
+{% endblock content %}

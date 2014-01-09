@@ -34,8 +34,12 @@ def render_contest(request, contest, contestant=None, key='',
 		won = False
 		withdraw_transaction = ''
 
+	prize = get_contest_prize(contest)
+	num_contestants = get_contestants(contest)
+
 	to_pack = ( 'contest', 'contestant', 'authorized', 'key', 'contestant_received', 'is_contestant',
-		'over', 'now', 'running', 'inputs', 'submissions', 'results', 'won', 'withdraw_transaction' )
+		'over', 'now', 'running', 'inputs', 'submissions', 'results', 'won', 'withdraw_transaction',
+		'prize', 'num_contestants')
 	packed = dict()
 	for x in to_pack:
 		packed[x] = locals()[x]		

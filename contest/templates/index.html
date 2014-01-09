@@ -1,8 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Compete for Dogecoins!{% endblock %}
+
+{% block header %}
+<h1>Compete at Dobraheura!</h1>
+<p>A brand new platform for algorithmic competitions. Let your approximations fight for your Doges!</p>
+{% endblock %}
+
+{% block content %}
 <ul>
 {% for contest in contests %}
-	<li>#{{ contest.id }}, {{ contest.type }}<a href="{% url 'contest' contest.id %}">Open</a></li>
+	<li>
+		<span class="id">#{{ contest.id }}</span>
+		<span class="type">{{ contest.type }}</span>
+		<a class="open" href="{% url 'contest' contest.id %}">View</a>
+		{% if contest.over %}
+		<span class="date">{{ contest.end_date }}.</span>
+		<span class="over">Over!</span>
+		{% else %}
+		<a class="compete" href="{% url 'get_key' contest.id %}">Compete</a>
+		<span class="date">{{ contest.start_date }}</span>
+		<span class="fee">{{ contest.entrance_fee }}</span>
+		{% endif %}
+	</li>
 
 {% empty %}
 	<li>Sorry, there are no contests I can show you</li>
 {% endfor%}
 </ul>
+
+<h2>Getting started</h2>
+<p>Before you can start competing, you should have a <a href="http://dogecoin.com">Dogecoin</a> wallet and some coins  in it to pay entrance fee. Don't worry, you will get those just for creating a new wallet on <a href="http://dogeapi.com">DogeAPI</a> or taking walk through a few Dogecoin <i>faucets</i>.</p>
+<p>Good luck!</p>
+
+<h2>Fees and prizes</h2>
+<p>To enter a contest you have to pay an entrance fee. We always leave 5D from all entrance fees in every contest. The rest goes on the account of the winner. The 5D stays by us, because we have to pay <i>TXFEE</i> when the winner withdraws his cash. If you know, how to precisely count <i>TXFEE</i>, please, let us know, so we can increase the winner's prize.</p>
+<p>This scenario is going to change. You'll be warned before it happen on this site.</p>
+
+{% endblock %}

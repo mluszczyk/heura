@@ -39,8 +39,12 @@ class Contest(models.Model):
 #	full_name = models.CharField()
 #	short = models.CharField()
 
-def get_contest_prize(contest):
+def get_contestants(contest):
 	count = Contestant.objects.filter(contest=contest, authorized=True).count()
+	return count
+
+def get_contest_prize(contest):
+	count = get_contestants(contest)
 	fee = contest.entrance_fee
 	return count * fee - fee/2
 
