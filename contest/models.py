@@ -46,7 +46,7 @@ def get_contestants(contest):
 def get_contest_prize(contest):
 	count = get_contestants(contest)
 	fee = contest.entrance_fee
-	return count * fee - fee/2
+	return count * fee
 
 class TaskLongestCycle(Contest):
 	class Meta:
@@ -92,6 +92,8 @@ class Contestant(models.Model):
 		return addr
 
 	def get_received(self):
+		if self.entrance_address == '':
+			return 0.0
 		p = Payment()
 		return p.get_address_received(self.entrance_address)
 	
@@ -148,7 +150,7 @@ def get_contest_results(contest):
 
 	inputs = list(Input.objects.filter(contest=contest).values('pk'))
 
-	contestants = Contestant.objects.filter(contest=contest)
+	contestants = Contestant.objects.filter(contest=contest, authorized=True)
 	results = []
 	for con in contestants:
 		user = [ ]
@@ -159,10 +161,10 @@ def get_contest_results(contest):
 			else:
 				user.append(0)
 
-			if con.pk in last:
-				date = last[con.pk]
-			else:
-				date = contest.start_date
+		if con.pk in last:
+			date = last[con.pk]
+		else:
+			date = contest.start_date
 
 		results.append([con.hash, sum(user), date] + user)
 

@@ -9,7 +9,7 @@ Contest #{{contest.id}}
 	<p class="dates">Announced: {{ contest.announce_date }}.
 		Starts at: {{ contest.start_date }}. Ends at: {{ contest.end_date }}.
 	Fee: {{ contest.entrance_fee }}. Number of contestants: {{ num_contestants }}.
-	{% if over %} Prize {% else %} Expected prize (at least): {% endif %} {{ prize }} </p>
+	{% if over %} Prize: {% else %} Expected prize (at least): {% endif %} {{ prize }}.</p>
 {% endblock %}
 
 {% block content %}
@@ -18,23 +18,39 @@ Contest #{{contest.id}}
 
 
 {% if not is_contestant and not over %}
-	<p class="enter"><a href="{% url 'get_key' contest.id %}">Compete!</a></p>
+	<p class="alert alert-info"><a class="alert-link" href="{% url 'get_key' contest.id %}">Compete!</a></p>
 {% endif %}
 
 {% if is_contestant and not authorized and not over %}
-	<p class="unauthorized">We haven't received your entrance fee. Pay on: {{ contestant.entrance_address }} and wait for some confirmations. After that reload the page. There's no autorefresh.</p>
-	<p class="received">{{ contestant_received }}/{{ contest.entrance_fee }}</p>
+	<p class="alert alert-warning">Please, pay your entrance fee on: {{ contestant.entrance_address }} and wait for some confirmations. We've already received: {{ contestant_received }}/{{ contest.entrance_fee }}. Refresh this page to check if your transaction's already come.</p>
 {% endif %}
 
 {% if is_contestant and authorized %}
-	<p>You're in! Your key: {{ key }}, hash: {{ contestant.hash }}</p>
+	<p class="alert alert-info">You're in! Your key: {{ key }}, hash: {{ contestant.hash }}</p>
+
+{% endif %}
+
+{% if won %}
+
+<p class="alert alert-success">Congratulations, you're the winner.</p>
+
+{% endif %}
+
+{% if won and not free %}
+	<h2>Prize</h2>
+	{% if withdraw_transaction %}
+	<p >You've already withdrawn your prize. Transaction: "{{ withdraw_transaction}}".</p>
+	{% else %}
+	<p><a href="{% url 'withdraw' key %}">Withdraw your prize now!</a></p>
+	{% endif %}
 
 {% endif %}
 
 	<h2>Task</h2>
 	<div class="long_descr">
+
 {% block task_long_descr %}
-		<p>It's not easy to find the longest cycle in a general graph. You're given a simple  graph (i.e. undirected, without multiedges and loops). Your task is to find a simple cycle in it (a path that begins and ends in the same vertex, but goes through any edge and vertex at most once). Remember, the longer cycle you find, the more points you get.</p>
+		<p>It's not easy to find the longest cycle in a general graph. You're given a simple  graph (<i>i.e.</i> undirected, without multiedges and loops). Your task is to find a simple cycle in it (a path that begins and ends in the same vertex, but goes through any edge and vertex at most once). Remember, the longer cycle you find, the more points you get.</p>
 
 		<p>Vertices are numbered from 1. You can assume, that there exist at least a cycle of length 2 in each input graph.</p>
 
@@ -42,18 +58,6 @@ Contest #{{contest.id}}
 		<p><b>Output:</b> The correct output consists of two lines. The first contains the length of the cycle you've found, and the next should be the list of numbers of subsequent vertices.</p>
 	</div>
 {% endblock %}
-
-{% if won %}
-
-<p>Congratulations, you're the winner.</p>
-
-	{% if withdraw_transaction %}
-	<p>You've already withdrawn your prize. Transaction: "{{ withdraw_transaction}}".</p>
-	{% else %}
-	<p><a href="{% url 'withdraw' key %}">Withdraw your prize now!</a></p>
-	{% endif %}
-
-{% endif %}
 
 {% if over %}
 	<h2>Results</h2>
@@ -76,7 +80,7 @@ Contest #{{contest.id}}
 	</tr>
 
 	{% empty %}
-	<tr><td>Er, no participants? Really?</td></tr>
+	<tr><td colspan="{{ input.count|add:"3" }}")>Er, no participants? Really?</td></tr>
 
 	{% endfor %}
 
@@ -121,7 +125,7 @@ Contest #{{contest.id}}
 			<td>{{ sub.score }}</td>
 		</tr>
 	{% empty %}
-		<tr><td colspan="4">Be the first to submit your output!</td></tr>
+		<tr><td colspan="5">No submissions.</td></tr>
 	{% endfor %}
 	</table>
 

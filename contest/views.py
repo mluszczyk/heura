@@ -27,22 +27,27 @@ def render_contest(request, contest, contestant=None, key='',
 	else:
 		results = []
 
-	if over and authorized and results[0][0]==contestant.hash:
+	if over and authorized and results[0][0]==contestant.hash: # authorized, so len(results)>0
 		won = True
 		withdraw_transaction = contestant.withdraw_transaction
 	else:
 		won = False
 		withdraw_transaction = ''
 
+	if contest.entrance_fee == 0:
+		free = True
+	else:
+		free = False
+
 	prize = get_contest_prize(contest)
 	num_contestants = get_contestants(contest)
 
 	to_pack = ( 'contest', 'contestant', 'authorized', 'key', 'contestant_received', 'is_contestant',
 		'over', 'now', 'running', 'inputs', 'submissions', 'results', 'won', 'withdraw_transaction',
-		'prize', 'num_contestants')
+		'prize', 'num_contestants', 'free')
 	packed = dict()
 	for x in to_pack:
-		packed[x] = locals()[x]		
+		packed[x] = locals()[x]	
 
 	return render_to_response('contest.html', packed)
 
@@ -168,7 +173,8 @@ def withdraw(request, key):
 
 def get_key(request, contest_id):
 	c = Contestant(contest=Contest.objects.get(pk=contest_id))
-	c.get_new_address()
+	if c.contest.entrance_fee:
+		c.get_new_address()
 	key = c.generate_key()
 	c.save()
 	return render_to_response('get_key.html', {'key': key})
