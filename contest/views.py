@@ -101,7 +101,7 @@ def get_input(request, input, key=''):
 	contest = input.contest
 
 	response = HttpResponse(content_type='plain/text')
-	response['Content-Disposition']='attachment; filename="{}.in"'.format(input.id)
+	response['Content-Disposition']='attachment; filename="{}_{}.in"'.format(contest.type, input.id)
 
 	try:
 		contest_check, contestant = auth_by_key(key)
