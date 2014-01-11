@@ -7,9 +7,9 @@ Contest #{{contest.id}}
 {% block header %}
 <h1>#{{ contest.id }}. {% block task_name %}Longest cycle{% endblock %}</h1>
 	<p class="dates">Announced: {{ contest.announce_date }}.
-		Starts on: {{ contest.start_date }}. Ends on: {{ contest.end_date }}.
-	Fee: {{ contest.entrance_fee }}. Number of contestants: {{ num_contestants }}.
-	{% if over %} Prize: {% else %} Expected prize (at least): {% endif %} {{ prize }}.</p>
+		Starts on: {{ contest.start_date }} Ends on: {{ contest.end_date }}
+	Fee: {{ contest.entrance_fee }}D. Number of contestants: {{ num_contestants }}.
+	{% if over %} Prize: {% else %} Expected prize (at least): {% endif %} {{ prize }}D.</p>
 {% endblock %}
 
 {% block content %}
