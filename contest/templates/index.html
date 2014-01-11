@@ -8,34 +8,45 @@
 {% endblock %}
 
 {% block content %}
-<ul>
+<div class="row">
 {% for contest in contests %}
-	<li>
-		<span class="id">#{{ contest.id }}</span>
-		<span class="type">{{ contest.type }}</span>
-		<a class="open" href="{% url 'contest' contest.id %}">View</a>
+	<div class="col-sm-3">
+		<div class="panel-body">
+		<p><strong>#{{ contest.id }} {{ contest.type }}</strong></p>
+
+		<p>
+		<a class="open btn btn-primary btn-xs" href="{% url 'contest' contest.id %}">View</a>
+		{% if not contest.over %}
+		<a class="compete btn btn-success btn-xs" href="{% url 'get_key' contest.id %}">Compete</a>
+		{% endif %}
+		</p>
+
+		<p>
+		<small>
 		{% if contest.over %}
 		<span class="date">{{ contest.end_date }}.</span>
 		<span class="over">Over!</span>
 		{% else %}
-		<a class="compete" href="{% url 'get_key' contest.id %}">Compete</a>
 		<span class="date">{{ contest.start_date }}</span>
-		<span class="fee">{{ contest.entrance_fee }}</span>
+		<span class="fee">{{ contest.entrance_fee }}D</span>
 		{% endif %}
-	</li>
+		</small>
+		</p>
+		</div>
+	</div>
 
 {% empty %}
-	<li>Sorry, there are no contests, I can show you</li>
+	<div>Sorry, there are no contests, I can show you</div>
 {% endfor%}
-</ul>
+</div>
 
 <h2>Getting started</h2>
-<p>Before you can start competing, you should have a <a href="http://dogecoin.com">Dogecoin</a> wallet and some coins  in it to pay entrance fee. Don't worry, you will get those just for creating a new wallet on <a href="http://dogeapi.com">DogeAPI</a> or taking walk through a few Dogecoin <i>faucets</i>.</p>
+<p>Before you can start competing, you should have a <a href="http://dogecoin.com">Dogecoin</a> wallet and some coins  in it to pay entrance fee. Don't worry, you will get those just for creating a new wallet on <a href="http://dogeapi.com">DogeAPI</a> or taking a walk through a few Dogecoin <i>faucets</i>.</p>
 <p>Good luck!</p>
 
 <h2>Fees and prizes</h2>
-<p>To enter a contest you have to pay an entrance fee. As soon, as the contest ends, the winner becomes a prize, which he can withdraw to the address he provides.</p>
-<p>Currently, the service takes no charge for using it and all entrance fees are paid back to the winner. This may change in the future, but you will be warned before on this site.</p>
-<p>As using the service is free, we ask for you donation!</p>
+<p>To enter a contest you have to pay a nominal entrance fee (in Dogecoins). As soon as the contest ends, the winner receives a prize, which he can withdraw to the address he provides.</p>
+<p>Currently, using the service is free of charge and all participants' entrance fees are paid back to the winner. This may change in the future, but you will be warned before it happens on this site.</p>
+<p>As using the service is free, we gently ask for generous donations!</p>
 
 {% endblock %}
