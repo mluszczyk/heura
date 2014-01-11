@@ -4,7 +4,7 @@ from contest.models import *
 from contest.forms import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, render, get_object_or_404
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -100,6 +100,9 @@ def get_input(request, input, key=''):
 	input = input_filter.get()
 	contest = input.contest
 
+	response = HttpResponse(content_type='plain/text')
+	response['Content-Disposition']='attachment; filename="{}.in"'.format(input.id)
+
 	try:
 		contest_check, contestant = auth_by_key(key)
 		auth = (contest_check == contest and contestant.authorized)
@@ -108,7 +111,8 @@ def get_input(request, input, key=''):
 		auth = False
 
 	if contest.over() or (contest.running() and auth):
-		return HttpResponse(input.text)
+		response.write(input.text)
+		return response
 	else:
 		raise PermissionDenied
 
@@ -172,7 +176,8 @@ def withdraw(request, key):
 	return render(request, 'withdraw_form.html', { 'form': form, 'key': key })
 
 def get_key(request, contest_id):
-	c = Contestant(contest=Contest.objects.get(pk=contest_id))
+	contest = get_object_or_404(Contest, pk=contest_id)
+	c = Contestant(contest=contest)
 	if c.contest.entrance_fee:
 		c.get_new_address()
 	key = c.generate_key()
