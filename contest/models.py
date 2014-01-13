@@ -100,35 +100,43 @@ class Contestant(models.Model):
 	def withdraw(self, amount, address):
 		p = Payment()
 		return p.withdraw(amount, address)
-		
 
 class Input(models.Model):
 	contest = models.ForeignKey('Contest')
-	text = models.TextField()
+	text = models.FileField(upload_to='upload/input/%m%d/%H%M%S')
+
+	def get_str(self):
+		self.text.open()
+		return self.text.read().decode()
+			
 
 class Submission(models.Model):
-	@staticmethod
-	def init_from_form(input, contestant, text, contest):
-		hash = hashstr(text)
+	def set_from_form(self, input, contestant, contest):
+		hash = hashstr(self.get_str())
 		
 		try:
-			score = contest.evaluate(input.text, text)
+			self.score = contest.evaluate(input.get_str(), self.get_str())
 		except Exception as e:
-			score = 0 
+			self.score = 0 
 			#raise e 		##### !!!!
 
 		if not contest.running():
 			return None
 		
-		s = Submission(input=input, contestant=contestant, text=text, hash=hash, score=score)
-		return s
+		self.input = input
+		self.contestant = contestant
+		self.hash = hash
 
 	input = models.ForeignKey('Input')
 	contestant = models.ForeignKey('Contestant')
 	date = models.DateTimeField(auto_now=True)
 	score = models.FloatField()
-	text = models.TextField()
+	text = models.FileField(upload_to='upload/submit/%m%d/%H%M%S')
 	hash = models.CharField(max_length=70)
+
+	def get_str(self):
+		self.text.open()
+		return self.text.read().decode()
 
 def get_contest_results(contest):
 	subs = Submission.objects.filter(input__contest=contest)

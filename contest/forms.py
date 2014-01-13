@@ -1,7 +1,10 @@
 from django import forms
+from contest.models import Submission
 
-class SubmitForm(forms.Form):
-	text = forms.CharField(widget=forms.widgets.Textarea)
+class SubmitForm(forms.ModelForm):
+	class Meta:
+		model = Submission
+		fields = [ 'text' ]
 
 class WithdrawForm(forms.Form):
 	address = forms.CharField()

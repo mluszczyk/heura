@@ -111,7 +111,7 @@ def get_input(request, input, key=''):
 		auth = False
 
 	if contest.over() or (contest.running() and auth):
-		response.write(input.text)
+		response.write(input.get_str())
 		return response
 	else:
 		raise PermissionDenied
@@ -120,7 +120,7 @@ def submit(request, input, key):
 	# should throw error, if contest is over
 
 	if request.method == 'POST':
-		form = SubmitForm(request.POST)
+		form = SubmitForm(request.POST, request.FILES)
 		if form.is_valid():
 			contest, contestant = auth_by_key(key)
 			input_filter = Input.objects.filter(pk=input)
@@ -135,7 +135,8 @@ def submit(request, input, key):
 
 			text = form.cleaned_data['text']
 
-			s = Submission.init_from_form(input=inputobj, contestant=contestant, contest=contest, text=text)
+			s = form.save(commit=False)		
+			s.set_from_form(input=inputobj, contestant=contestant, contest=contest)
 			s.save()
 
 			return HttpResponseRedirect(reverse('contestant', args=[ key ]))
