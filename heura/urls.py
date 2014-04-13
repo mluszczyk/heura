@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('contest.views',
+urlpatterns = patterns('heura.views',
 	url(r'^$', 'index'),
 	url(r'^contest/(\w+)$', 'contest', name='contest'),
 	url(r'^contestant/(\w+)$', 'contestant', name='contestant'),

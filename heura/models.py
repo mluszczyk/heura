@@ -1,17 +1,10 @@
 from django.db import models
-from Payment import Payment
-import string
-import random
-from hashlib import sha256
+from payment import Payment
 from django.utils import timezone
 from django.db.models import Max, Count
-
-from contest import checker
-
-KEY_LEN = 20
-SALT = '1uGq'
-def random_string(len):
-	return ''.join(random.choice(string.digits+string.ascii_letters) for _ in range(len))
+from heurasite.settings import CONTESTANT_KEY_LEN
+from heura.taskcontrollers import controllers
+from heura.utils import random_string, hash_string
 
 # Create your models here.
 
@@ -29,43 +22,23 @@ class Contest(models.Model):
 	def running(self):
 		return (self.start_date < timezone.now() < self.end_date)
 	
+	def controller(self):
+		return controllers[self.type]
+
 	def over(self):
 		return (self.end_date < timezone.now())
 
 	def evaluate(self, input, output):
-		return checker.longest_cycle_evaluate(input, output)
-		
+		return self.controller().evaluate(input, output)
 
-#	full_name = models.CharField()
-#	short = models.CharField()
+	def get_contestants(self):
+		count = self.contestant_set.filter(authorized=True).count()
+		return count
 
-def get_contestants(contest):
-	count = Contestant.objects.filter(contest=contest, authorized=True).count()
-	return count
-
-def get_contest_prize(contest):
-	count = get_contestants(contest)
-	fee = contest.entrance_fee
-	return count * fee
-
-class TaskLongestCycle(Contest):
-	class Meta:
-		proxy = True
-
-	cur_type = 'longest_cycle'
-
-	def correct_task(self):
-		return self.type == self.cur_type
-
-	def __unicode__(self):
-		if self.correct_task():
-			return '#{}'.format(self.id)
-		else:
-			return '#{} (not realy {})'.format(self.id, cur_type)
-
-def hashstr(x):
-	return sha256((x).encode()).hexdigest()
-		
+	def get_prize(self):
+		count = self.get_contestants()
+		fee = self.entrance_fee
+		return count * fee
 
 class Contestant(models.Model):
 	hash = models.CharField(max_length=70, default='')
@@ -76,13 +49,9 @@ class Contestant(models.Model):
 
 	contest = models.ForeignKey('Contest')
 
-	@staticmethod
-	def hash_from_key(key):
-		return hashstr(key)
-
 	def generate_key(self):
-		key = random_string(KEY_LEN)
-		self.hash = self.hash_from_key(key)
+		key = random_string(CONTESTANT_KEY_LEN)
+		self.hash = hash_string(key)
 		return key
 
 	def get_new_address(self):
@@ -111,14 +80,21 @@ class Input(models.Model):
 			
 
 class Submission(models.Model):
+	input = models.ForeignKey('Input')
+	contestant = models.ForeignKey('Contestant')
+	date = models.DateTimeField(auto_now=True)
+	score = models.FloatField()
+	text = models.FileField(upload_to='upload/submit/%m%d/%H%M%S')
+	hash = models.CharField(max_length=70)
+
 	def set_from_form(self, input, contestant, contest):
-		hash = hashstr(self.get_str())
+		hash = hash_string(self.get_str())
 		
 		try:
 			self.score = contest.evaluate(input.get_str(), self.get_str())
 		except Exception as e:
 			self.score = 0 
-			#raise e 		##### !!!!
+			raise e 		##### !!!!
 
 		if not contest.running():
 			return None
@@ -126,13 +102,6 @@ class Submission(models.Model):
 		self.input = input
 		self.contestant = contestant
 		self.hash = hash
-
-	input = models.ForeignKey('Input')
-	contestant = models.ForeignKey('Contestant')
-	date = models.DateTimeField(auto_now=True)
-	score = models.FloatField()
-	text = models.FileField(upload_to='upload/submit/%m%d/%H%M%S')
-	hash = models.CharField(max_length=70)
 
 	def get_str(self):
 		self.text.open()
@@ -158,7 +127,7 @@ def get_contest_results(contest):
 
 	inputs = list(Input.objects.filter(contest=contest).values('pk'))
 
-	contestants = Contestant.objects.filter(contest=contest, authorized=True)
+	contestants = contest.contestant_set.filter(contest=contest, authorized=True)
 	results = []
 	for con in contestants:
 		user = [ ]

@@ -1,12 +1,13 @@
 # Create your views here.
 
-from contest.models import *
-from contest.forms import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, render, get_object_or_404
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from heura.models import *
+from heura.forms import *
+from heura.utils import hash_string
 
 def index(request): 
 	 contests = Contest.objects.all()
@@ -39,8 +40,8 @@ def render_contest(request, contest, contestant=None, key='',
 	else:
 		free = False
 
-	prize = get_contest_prize(contest)
-	num_contestants = get_contestants(contest)
+	prize = contest.get_prize()
+	num_contestants = contest.get_contestants()
 
 	to_pack = ( 'contest', 'contestant', 'authorized', 'key', 'contestant_received', 'is_contestant',
 		'over', 'now', 'running', 'inputs', 'submissions', 'results', 'won', 'withdraw_transaction',
@@ -49,14 +50,14 @@ def render_contest(request, contest, contestant=None, key='',
 	for x in to_pack:
 		packed[x] = locals()[x]	
 
-	return render_to_response('contest.html', packed)
+	return render_to_response(contest.controller().get_template(), packed)
 
 def contest(request, contest_id):
 	contest = Contest.objects.get(pk=contest_id)
 	return render_contest(request, contest)
 
 def auth_by_key(key):
-	contestant_filter = Contestant.objects.filter(hash=Contestant.hash_from_key(key))
+	contestant_filter = Contestant.objects.filter(hash=hash_string(key))
 	if contestant_filter.count() != 1:
 		raise PermissionDenied
 

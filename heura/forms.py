@@ -1,5 +1,5 @@
 from django import forms
-from contest.models import Submission
+from heura.models import Submission
 
 class SubmitForm(forms.ModelForm):
 	class Meta:

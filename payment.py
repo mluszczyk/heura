@@ -1,6 +1,6 @@
 import json
 from http.client import HTTPSConnection
-from dobraheura.settings import PAYMENT_API_KEY as AK
+from heurasite.settings import PAYMENT_API_KEY as AK
 
 server = 'dogeapi.com'
 url = '/wow'

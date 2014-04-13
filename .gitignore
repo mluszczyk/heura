@@ -1,5 +1,5 @@
 *.pyc
 __pycache__
 database/dev.db
-dobraheura/settings.py
+heurasite/settings.py
 upload
