@@ -1,5 +1,7 @@
-It's your magic key. Please, keep it, because we won't.
+{% load i18n %}
+
+{% trans "It's your magic key. Please, keep it, because we won't." %}
 
 {{ key }}
 
-Now you should move to  <a href="{% url 'contestant' key %}">this page</a>.
+{% trans "Now you should move to" %} <a href="{% url 'contestant' key %}">{% trans "this page" %}</a>.

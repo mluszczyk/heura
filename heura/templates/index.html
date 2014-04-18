@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Compete for Dogecoins!{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Compete for Dogecoins!" %}{% endblock %}
 
 {% block header %}
-<h1>Compete at Dobraheura!</h1>
-<p>A brand new platform for algorithmic competitions. Let your approximations fight for your Doges!</p>
+<h1>{% trans "Compete at Dobraheura!" %}</h1>
+<p>{% trans "A brand new platform for algorithmic competitions. Let your approximations fight for your Doges!" %}</p>
 {% endblock %}
 
 {% block content %}
@@ -15,9 +17,9 @@
 		<p><strong>#{{ contest.id }} {{ contest.type }}</strong></p>
 
 		<p>
-		<a class="open btn btn-primary btn-xs" href="{% url 'contest' contest.id %}">View</a>
+		<a class="open btn btn-primary btn-xs" href="{% url 'contest' contest.id %}">{% trans "View" %}</a>
 		{% if not contest.over %}
-		<a class="compete btn btn-success btn-xs" href="{% url 'get_key' contest.id %}">Compete</a>
+		<a class="compete btn btn-success btn-xs" href="{% url 'get_key' contest.id %}">{% trans "Compete" %}</a>
 		{% endif %}
 		</p>
 
@@ -25,7 +27,7 @@
 		<small>
 		{% if contest.over %}
 		<span class="date">{{ contest.end_date }}</span>
-		<span class="over">Over!</span>
+		<span class="over">{% trans "Over" %}!</span>
 		{% else %}
 		<span class="date">{{ contest.start_date }}</span>
 		<span class="fee">{{ contest.entrance_fee }}D</span>
@@ -36,19 +38,19 @@
 	</div>
 
 {% empty %}
-	<div class="col-sm-12"><p class="alert alert-info">Sorry, there's nothing I can show you. Please, come again later!</p></div>
+	<div class="col-sm-12"><p class="alert alert-info">{% trans "Sorry, there's nothing I can show you. Please, come again later!" %}</p></div>
 {% endfor%}
 </div>
 
-<h2>Getting started</h2>
+{% blocktrans %}<h2>Getting started</h2>
 <p>Before you can start competing, you should have a <a href="http://dogecoin.com">Dogecoin</a> wallet and some coins  in it to pay entrance fee. Don't worry, you will get those just for creating a new wallet on <a href="http://dogeapi.com">DogeAPI</a> or taking a walk through a few Dogecoin <i>faucets</i>.</p>
 <p>Good luck!</p>
 
 <h2>Fees and prizes</h2>
 <p>To enter a contest you have to pay a nominal entrance fee (in Dogecoins). As soon as the contest ends, the winner receives a prize, which he can withdraw to the address he provides.</p>
 <p>Currently, using the service is free of charge and all participants' entrance fees are paid back to the winner. This may change in the future, but you will be warned before it happens on this site.</p>
-<p>As using the service is free, we gently ask for generous donations!</p>
+<p>As using the service is free, we gently ask for generous donations!</p>{% endblocktrans %}
 
-<p>DOGE: DDxa9SbENfFSy2QtvzY2CLR3r2iHniWXRD BTC:1Hk1Ds1psTqXXJwtwpCsxWt5Wt5BibaKj8</p>
+<p>DOGE: DDxa9SbENfFSy2QtvzY2CLR3r2iHniWXRD BTC: 1Hk1Ds1psTqXXJwtwpCsxWt5Wt5BibaKj8</p>
 
 {% endblock %}

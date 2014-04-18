@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %}
-Contest #{{contest.id}}
+{% trans "Contest" %} #{{contest.id}}
 {% endblock %}
 
 {% block header %}
-<h1>#{{ contest.id }}. {% block task_name %}Longest cycle{% endblock %}</h1>
-	<p class="dates">Announced: {{ contest.announce_date }}.
-		Starts on: {{ contest.start_date }} Ends on: {{ contest.end_date }}
-	Fee: {{ contest.entrance_fee }}D. Number of contestants: {{ num_contestants }}.
-	{% if over %} Prize: {% else %} Expected prize (at least): {% endif %} {{ prize }}D.</p>
+<h1>#{{ contest.id }}. {% block task_name %}Delicious task{% endblock %}</h1>
+	<p class="dates">{% trans "Announced" %}: {{ contest.announce_date }}.
+		{% trans "Starts on" %}: {{ contest.start_date }} {% trans "Ends on" %}: {{ contest.end_date }}
+	{% trans "Fee" %}: {{ contest.entrance_fee }}D. {% trans "Number of contestants" %}: {{ num_contestants }}.
+	{% if over %} {% trans "Prize" %}: {% else %} {% trans "Expected prize (at least)" %}: {% endif %} {{ prize }}D.</p>
 {% endblock %}
 
 {% block content %}
@@ -18,55 +20,52 @@ Contest #{{contest.id}}
 
 
 {% if not is_contestant and not over %}
-	<p class="alert alert-info"><a class="alert-link" href="{% url 'get_key' contest.id %}">Compete!</a></p>
+	<p class="alert alert-info"><a class="alert-link" href="{% url 'get_key' contest.id %}">{% trans "Compete!" %}</a></p>
 {% endif %}
 
 {% if is_contestant and not authorized and not over %}
-	<p class="alert alert-warning">Please, pay your entrance fee on: {{ contestant.entrance_address }} and wait for some confirmations. We've already received: {{ contestant_received }}/{{ contest.entrance_fee }}. Refresh this page to check if your transaction is already executed.</p>
+	<p class="alert alert-warning">
+{% blocktrans with address=contestant.entrance_address %}Please, pay your entrance fee on: {{ address }} and wait for some confirmations.{% endblocktrans %}
+{% blocktrans  %}We've already received{%endblocktrans %}: {{ contestant_received }}/{{ contest.entrance_fee }}.
+{% blocktrans %}Refresh this page to check if your transaction is already executed.{% endblocktrans %}</p>
 {% endif %}
 
 {% if is_contestant and authorized %}
-	<p class="alert alert-info">You're in! Your key: {{ key }}, hash: {{ contestant.hash }}</p>
+	<p class="alert alert-info">{% blocktrans with hash=contestant.hash %}You're in! Your key: {{ key }}, hash: {{ hash }}{% endblocktrans %}</p>
 
 {% endif %}
 
 {% if won %}
 
-<p class="alert alert-success">Congratulations, you're the winner.</p>
+<p class="alert alert-success">{% blocktrans %}Congratulations, you're the winner.{% endblocktrans %}</p>
 
 {% endif %}
 
 {% if won and not free %}
-	<h2>Prize</h2>
+	<h2>{% trans "Prize" %}</h2>
 	{% if withdraw_transaction %}
-	<p >You've already withdrawn your prize. Transaction: "{{ withdraw_transaction}}".</p>
+	<p >{% trans "You've already withdrawn your prize" %}. {% trans "Transaction" %}: "{{ withdraw_transaction}}".</p>
 	{% else %}
-	<p><a href="{% url 'withdraw' key %}">Withdraw your prize now!</a></p>
+	<p><a href="{% url 'withdraw' key %}">{% trans "Withdraw your prize now!" %}</a></p>
 	{% endif %}
 
 {% endif %}
 
-	<h2>Task</h2>
+	<h2>{% trans "Task" %}</h2>
 	<div class="long_descr">
 
 {% block task_long_descr %}
-		<p>It's not easy to find the longest cycle in a general graph. You're given a simple  graph (<i>i.e.</i> undirected, without multiedges and loops). Your task is to find a simple cycle in it (a path that begins and ends in the same vertex, but goes through any edge and vertex at most once). Remember, the longer cycle you find, the more points you get.</p>
-
-		<p>Vertices are numbered from 1. You can assume, there exists at least one cycle of length at least 3 in each input graph.</p>
-
-		<p><b>Input:</b> In the first line there are numbers <i>n</i> and <i>m</i> - the number of vertices and edges. In the next <i>m</i> lines follow integers <i>a</i> and <i>b</i>, which mean, that an edge connects vertices <i>a</i> and <i>b</i>.</p>
-		<p><b>Output:</b> The correct output consists of two lines. The first contains the length of the cycle you've found, and the next should be the list of numbers of subsequent vertices.</p>
-	</div>
+	<p>Exciting task description</p>
 {% endblock %}
 
 {% if over %}
-	<h2>Results</h2>
+	<h2>{% trans "Results" %}</h2>
 
 	<table class="table">
 	<tr>
-		<th>Contestant</th>
-		<th>Full score</th>
-		<th>Last submit</th>
+		<th>{% trans "Contestant" %}</th>
+		<th>{% trans "Full score" %}</th>
+		<th>{% trans "Last submit" %}</th>
 		{% for input in inputs %}
 			<th>#{{ input.pk }}</th>
 		{% endfor %}
@@ -81,7 +80,7 @@ Contest #{{contest.id}}
 	</tr>
 
 	{% empty %}
-	<tr><td colspan="{{ input.count|add:"3" }}")>Er, no participants? Really?</td></tr>
+	<tr><td colspan="{{ input.count|add:"3" }}")>{% trans "Er, no participants? Really?" %}</td></tr>
 
 	{% endfor %}
 
@@ -90,32 +89,32 @@ Contest #{{contest.id}}
 {% endif %}
 
 {% if running and authorized or over %} 
-	<h2>Input data</h2>
+	<h2>{% trans "Input data" %}</h2>
 
 	<ul class="inputs">
 	{% for input in inputs %}
-		<li>Input #{{ input.id }}: 
-			<a href="{% url 'get_input' input.id key %}">Download</a>
+		<li>{% trans "Input" %} #{{ input.id }}: 
+			<a href="{% url 'get_input' input.id key %}">{% trans "Download" %}</a>
 			{% if running and authorized %}
-			<a href="{% url 'submit' input.id key %}">Submit output</a>
+			<a href="{% url 'submit' input.id key %}">{% trans "Submit output" %}</a>
 			{% endif %}
 		</li>
 
 	{% empty %}
-		<li>Sorry, there are no inputs yet.</li>
+		<li>{% trans "Sorry, there are no inputs yet." %}</li>
 	{% endfor %}
 
 	</ul>
 
-	<h2>Submissions</h2>
+	<h2>{% trans "Submissions" %}</h2>
 
 	<table class="submissions table">
 		<tr>
-			<th>Date</th>
-			<th>Input no.</th>
-			<th>Contestant</th>
-			<th>Hash</th>
-			<th>Score</th>
+			<th>{% trans "Date" %}</th>
+			<th>{% trans "Input no." %}</th>
+			<th>{% trans "Contestant" %}</th>
+			<th>{% trans "Hash" %}</th>
+			<th>{% trans "Score" %}</th>
 		</tr>
 	{% for sub in submissions %}
 		<tr>
@@ -126,7 +125,7 @@ Contest #{{contest.id}}
 			<td>{{ sub.score }}</td>
 		</tr>
 	{% empty %}
-		<tr><td colspan="5">No submissions.</td></tr>
+		<tr><td colspan="5">{% trans "No submissions." %}</td></tr>
 	{% endfor %}
 	</table>
 

@@ -1,0 +1,296 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-18 22:03+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Michał Łuszczyk michal.luszczyk@gmail.com\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: templates/404.html:4
+msgid "404. The page you're looking for hasn't been found."
+msgstr "404. Strona nie znaleziona."
+
+#: templates/500.html:3
+msgid "500. Server error. Please, contact administrator."
+msgstr "500. Błąd serwera. Proszę, powiadom administratora!"
+
+#: templates/503.html:3
+msgid "403. Forbidden"
+msgstr "403. Zakaz wstępu"
+
+#: templates/after_submit.html:3
+msgid "Well. You've posted some data, haven't you?"
+msgstr "Hm… wrzuciłeś coś, nie?"
+
+#: templates/contest.html:6
+msgid "Contest"
+msgstr "Konkurs"
+
+#: templates/contest.html:11
+msgid "Announced"
+msgstr "Ogłoszenie"
+
+#: templates/contest.html:12
+msgid "Starts on"
+msgstr "Rozpoczęcie"
+
+#: templates/contest.html:12
+msgid "Ends on"
+msgstr "Zakończenie"
+
+#: templates/contest.html:13
+msgid "Fee"
+msgstr "Wstęp"
+
+#: templates/contest.html:13
+msgid "Number of contestants"
+msgstr "Liczba zawodników"
+
+#: templates/contest.html:14 templates/contest.html.py:45
+msgid "Prize"
+msgstr "Nagroda"
+
+#: templates/contest.html:14
+msgid "Expected prize (at least)"
+msgstr "Nagroda (przynajmniej)"
+
+#: templates/contest.html:23
+msgid "Compete!"
+msgstr "Weź udział!"
+
+#: templates/contest.html:28
+#, python-format
+msgid ""
+"Please, pay your entrance fee on: %(address)s and wait for some "
+"confirmations."
+msgstr "Przelej Dogecoiny na: %(address)s  i poczekaj na parę potwierdzeń. "
+
+#: templates/contest.html:29
+msgid "We've already received"
+msgstr "Otrzymaliśmy dotychczas"
+
+#: templates/contest.html:30
+msgid "Refresh this page to check if your transaction is already executed."
+msgstr "Czekasz na potwierdzenie? Odśwież stronę!"
+
+#: templates/contest.html:34
+#, python-format
+msgid "You're in! Your key: %(key)s, hash: %(hash)s"
+msgstr "Zapraszamy! Twój klucz: %(key)s, hash: %(hash)s"
+
+#: templates/contest.html:40
+msgid "Congratulations, you're the winner."
+msgstr "Gratulacje, wygrałeś!"
+
+#: templates/contest.html:47
+msgid "You've already withdrawn your prize"
+msgstr "Odebrałeś już nagrodę"
+
+#: templates/contest.html:47
+msgid "Transaction"
+msgstr "Transakcja"
+
+#: templates/contest.html:49
+msgid "Withdraw your prize now!"
+msgstr "Odbierz nagrodę!"
+
+#: templates/contest.html:54
+msgid "Task"
+msgstr "Zadanie"
+
+#: templates/contest.html:62
+msgid "Results"
+msgstr "Wyniki"
+
+#: templates/contest.html:66 templates/contest.html.py:115
+msgid "Contestant"
+msgstr "Zawodnik"
+
+#: templates/contest.html:67
+msgid "Full score"
+msgstr "Łączny wynik"
+
+#: templates/contest.html:68
+msgid "Last submit"
+msgstr "Ostatnie zgłoszenie"
+
+#: templates/contest.html:83
+msgid "Er, no participants? Really?"
+msgstr "Nikt nie wziął udziału :<"
+
+#: templates/contest.html:92
+msgid "Input data"
+msgstr "Dane wejściowe"
+
+#: templates/contest.html:96
+msgid "Input"
+msgstr "Wejście"
+
+#: templates/contest.html:97
+msgid "Download"
+msgstr "Pobierz"
+
+#: templates/contest.html:99
+msgid "Submit output"
+msgstr "Wyślij odpowiedź"
+
+#: templates/contest.html:104
+msgid "Sorry, there are no inputs yet."
+msgstr "Brak plików wejściowych"
+
+#: templates/contest.html:109
+msgid "Submissions"
+msgstr "Zgłoszenia"
+
+#: templates/contest.html:113
+msgid "Date"
+msgstr "Data"
+
+#: templates/contest.html:114
+msgid "Input no."
+msgstr "Wejście nr"
+
+#: templates/contest.html:116
+msgid "Hash"
+msgstr "Hash"
+
+#: templates/contest.html:117
+msgid "Score"
+msgstr "Wynik"
+
+#: templates/contest.html:128
+msgid "No submissions."
+msgstr "Brak zgłoszeń."
+
+#: templates/get_key.html:3
+msgid "It's your magic key. Please, keep it, because we won't."
+msgstr ""
+"To Twój magiczny klucz. Nie będziemy go nigdzie zapisywać, to Twoja sprawa"
+
+#: templates/get_key.html:7
+msgid "Now you should move to"
+msgstr "Teraz przejdź do"
+
+#: templates/get_key.html:7
+msgid "this page"
+msgstr "tej strony"
+
+#: templates/index.html:5
+msgid "Compete for Dogecoins!"
+msgstr "Walcz o Dogecoiny"
+
+#: templates/index.html:8
+msgid "Compete at Dobraheura!"
+msgstr "Walcz jak lew na Dobrejheurze!"
+
+#: templates/index.html:9
+msgid ""
+"A brand new platform for algorithmic competitions. Let your approximations "
+"fight for your Doges!"
+msgstr "Nowiutki algorytmiczny ring. Wrzucaj heury i zbieraj Dogecoiny!"
+
+#: templates/index.html:20
+msgid "View"
+msgstr "Zobacz"
+
+#: templates/index.html:22
+msgid "Compete"
+msgstr "Weź udział"
+
+#: templates/index.html:30
+msgid "Over"
+msgstr "Koniec"
+
+#: templates/index.html:41
+msgid "Sorry, there's nothing I can show you. Please, come again later!"
+msgstr "Niestety, nie ma tu nic ciekawego. Ale przyjdź, niedługo będzie!"
+
+#: templates/index.html:45
+msgid ""
+"<h2>Getting started</h2>\n"
+"<p>Before you can start competing, you should have a <a href=\"http://"
+"dogecoin.com\">Dogecoin</a> wallet and some coins  in it to pay entrance "
+"fee. Don't worry, you will get those just for creating a new wallet on <a "
+"href=\"http://dogeapi.com\">DogeAPI</a> or taking a walk through a few "
+"Dogecoin <i>faucets</i>.</p>\n"
+"<p>Good luck!</p>\n"
+"\n"
+"<h2>Fees and prizes</h2>\n"
+"<p>To enter a contest you have to pay a nominal entrance fee (in Dogecoins). "
+"As soon as the contest ends, the winner receives a prize, which he can "
+"withdraw to the address he provides.</p>\n"
+"<p>Currently, using the service is free of charge and all participants' "
+"entrance fees are paid back to the winner. This may change in the future, "
+"but you will be warned before it happens on this site.</p>\n"
+"<p>As using the service is free, we gently ask for generous donations!</p>"
+msgstr "<p>Śmiszny tekst</p>"
+
+#: templates/inputs.html:5
+msgid "Link"
+msgstr "Link"
+
+#: templates/longest_cycle.html:5
+msgid "Longest cycle"
+msgstr ""
+
+#: templates/longest_cycle.html:8
+msgid ""
+"\n"
+"<p>It's not easy to find the longest cycle in a general graph. You're given "
+"a simple  graph (<i>i.e.</i> undirected, without multiedges and loops). Your "
+"task is to find a simple cycle in it (a path that begins and ends in the "
+"same vertex, but goes through any edge and vertex at most once). The longer "
+"cycle you find, the more points you get.</p>\n"
+"\n"
+"<p>Vertices are numbered from 1. You can assume that there exists at least "
+"one cycle of length at least 3 in each input graph.</p>\n"
+"\n"
+"<p><b>Input:</b> In the first line there are numbers <i>n</i> and <i>m</i> – "
+"the number of vertices and edges. In the next <i>m</i> lines follow integers "
+"<i>a</i> and <i>b</i>, which mean, that an edge connects vertices <i>a</i> "
+"and <i>b</i>.</p>\n"
+"<p><b>Output:</b> The correct output consists of two lines. The first "
+"contains the length of the cycle you've found, and the next should be the "
+"list of numbers of subsequent vertices.</p>\n"
+"\n"
+"<p>Remember, you never have to find the longest possible cycle! It's usually "
+"impossible! Your answer should contain a cycle of any length. However, "
+"longer cycles recieve more points.</p>\n"
+msgstr ""
+"\n"
+"<p>Szukanie najdłuższego cyklu w grafie to bardzo trudny problem. Twoim "
+"zadaniem jest znalezienie w podanym grafie prostym (czyli grafie "
+"nieskierowanym bez pętli i wielokrotnych krawędzi). jak najdłuższego cyklu "
+"prostego (czyli ścieżki, która zaczyna się i kończy w tym samym wierzchołku "
+"i przez każdy wierzchołek przechodzi co najwyżej raz).</p>\n"
+"<p>Wierzchołki numerujemy kolejnymi liczbami naturalnymi od 1. Możesz "
+"założyć, że w każdym grafie \n"
+"na wejściu istnieje przynajmniej jeden cykl o długości przynajmniej 3.</"
+"p><p><b>Wejście:</b> Pierwsza linia wejścia zawiera liczby <i>n</i> i <i>m</"
+"i>, czyli odpowiednio liczbę wierzchołków i krawędzi. Kolejne <i>m</i> linii "
+"to opisy krawędzi: liczby <i>a</i> i <i>b</i>, oznaczające, że wierzchołki "
+"<i>a</i> i <i>b</i> są połączone krawędzią.<p> <p><b>Wyjście:</b> Prawidłowe "
+"wyjście składa się z dwóch linii. Piewrsza z nich to długość znalezionego "
+"cyklu, a druga to numery kolejnych wierzchołków tego cyklu. Możesz zacząć od "
+"dowolnego wierzchołka. Każdy wierzchołek wypisz co najwyżej raz.</p>\n"
+"<p>Pamiętaj! W tym zadaniu nie chodzi o znalezienie najdłuższego cyklu w "
+"grafie. W większości przypadków takie zadanie byłoby niemożliwe do "
+"wykonania. Znajdź dowolny cykl. Im będzie dłuższy, tym więcej punktów "
+"dostaniesz</p>\n"
+
+#: templates/submit_form.html:5 templates/withdraw_form.html:5
+msgid "Submit"
+msgstr "Wyślij odpowiedź"

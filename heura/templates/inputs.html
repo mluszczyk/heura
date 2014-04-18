@@ -1,6 +1,9 @@
+{% load i18n %}
+
 <ul>
 {% for input in inputs %}
-	<li><a href="{% url 'input' input userhash %}">Link<a></li>
+	<li><a href="{% url 'input' input userhash %}">{% trans "Link" %}<a></li>
 {% empty %}
-	<li>No inputs available</li>
+	<li>{% trans "No inputs available" }</li>
 {% endfor %}
+</ul>

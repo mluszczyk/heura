@@ -3,3 +3,4 @@ __pycache__
 database/dev.db
 heurasite/settings.py
 upload
+*.mo
