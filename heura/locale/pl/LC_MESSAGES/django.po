@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-18 22:03+0200\n"
+"POT-Creation-Date: 2014-04-26 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Michał Łuszczyk michal.luszczyk@gmail.com\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,7 +236,15 @@ msgid ""
 "entrance fees are paid back to the winner. This may change in the future, "
 "but you will be warned before it happens on this site.</p>\n"
 "<p>As using the service is free, we gently ask for generous donations!</p>"
-msgstr "<p>Śmiszny tekst</p>"
+msgstr "<h2>Jak zacząć?</h2><p>Wkrótce się tu coś pojawi.</p>"
+
+#: templates/index.html:56
+msgid "We're on GitHub."
+msgstr "Odwiedź nas na GitHubie!"
+
+#: templates/index.html:57
+msgid "Repository"
+msgstr "Repozytorium"
 
 #: templates/inputs.html:5
 msgid "Link"
@@ -244,7 +252,7 @@ msgstr "Link"
 
 #: templates/longest_cycle.html:5
 msgid "Longest cycle"
-msgstr ""
+msgstr "Najdłuższy cykl"
 
 #: templates/longest_cycle.html:8
 msgid ""
