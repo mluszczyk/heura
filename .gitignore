@@ -4,3 +4,4 @@ database/dev.db
 heurasite/settings.py
 upload
 *.mo
+.*.swp
