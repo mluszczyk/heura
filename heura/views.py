@@ -2,7 +2,7 @@
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response, render, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from heura.models import *
@@ -10,8 +10,11 @@ from heura.forms import *
 from heura.utils import hash_string
 
 def index(request): 
-	 contests = Contest.objects.all()
-	 return render_to_response('index.html', {'contests': contests})
+	contests = Contest.objects.all()
+	return render(request, 'index.html', {
+		'contests': contests,
+		'available_languages': [ 'en', 'pl' ],
+	})
 
 def render_contest(request, contest, contestant=None, key='', 
 		is_contestant=False, authorized=False, contestant_received=0):
@@ -50,7 +53,7 @@ def render_contest(request, contest, contestant=None, key='',
 	for x in to_pack:
 		packed[x] = locals()[x]	
 
-	return render_to_response(contest.controller().get_template(), packed)
+	return render(request, contest.controller().get_template(), packed)
 
 def contest(request, contest_id):
 	contest = Contest.objects.get(pk=contest_id)
@@ -184,5 +187,5 @@ def get_key(request, contest_id):
 		c.get_new_address()
 	key = c.generate_key()
 	c.save()
-	return render_to_response('get_key.html', {'key': key})
+	return render(request, 'get_key.html', {'key': key})
 
