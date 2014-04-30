@@ -94,9 +94,13 @@
 	<ul class="inputs">
 	{% for input in inputs %}
 		<li>{% trans "Input" %} #{{ input.id }}: 
-			<a href="{% url 'get_input' input.id key %}">{% trans "Download" %}</a>
+			<a class="btn btn-xs" href="{% url 'get_input' input.id key %}">
+			<span class="glyphicon glyphicon-download"></span> {% trans "Download" %} 
+			</a>
 			{% if running and authorized %}
-			<a href="{% url 'submit' input.id key %}">{% trans "Submit output" %}</a>
+			<a class="btn btn-xs" href="{% url 'submit' input.id key %}"> 
+			<span class="glyphicon glyphicon-send"></span> {% trans "Submit output" %}
+			</a>
 			{% endif %}
 		</li>
 
