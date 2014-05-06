@@ -94,7 +94,6 @@ class Submission(models.Model):
 			self.score = contest.evaluate(input.get_str(), self.get_str())
 		except Exception as e:
 			self.score = 0 
-			raise e 		##### !!!!
 
 		if not contest.running():
 			return None
